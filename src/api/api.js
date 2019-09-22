@@ -4,19 +4,22 @@ import axios from 'axios'
 
 export const Login = params => {
   //console.log(params)
-  return axios.get(`/login`, { params }).then(res => {
-    //console.log(res.data)
-    res.data
-  })
+  return axios
+    .get(`/login`, { params })
+    .then(res => {
+      //console.log(res)
+      res.data
+    })
+    .catch(error => {
+      reject(error)
+    })
 }
 
 export const getUserList = params => {
   return axios.get(`/user/list`, { params: params })
 }
 export const getTodoList = params => {
-  //封装一个函数，名为getTodoList
   return axios.get(`/todo/list`, {
-    // 请求路径 ‘/todo/list’
     params: params
   })
 }

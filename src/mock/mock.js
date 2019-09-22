@@ -20,14 +20,12 @@ export default {
         let { username, password } = config.params
 
         return new Promise((resolve, reject) => {
-          //return new Promise(resolve => {
           let user = null
           let hasUser = LoginUsers.some(u => {
             if (
               u.username === username &&
               u.password === password
             ) {
-              console.log(u.username + ',,' + u.password)
               user = JSON.parse(JSON.stringify(u))
               user.password = undefined
               return true

@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <img
       src="./../assets/images/progress_icon_7.png"
       alt="s"
@@ -36,18 +35,13 @@
 
 <script>
 import { CellGroup, Field, Button } from 'vant'
-import { Image } from 'vant'
 import { Login } from '../api/api'
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  },
+  name: 'Login',
   components: {
     [CellGroup.name]: CellGroup,
     [Field.name]: Field,
-    [Button.name]: Button,
-    [Image.name]: Image
+    [Button.name]: Button
   },
   data() {
     return {
@@ -59,7 +53,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      if (this.login) {
+      if (this.login.username && this.login.password) {
         let para = {
           username: this.login.username,
           password: this.login.password
@@ -70,6 +64,7 @@ export default {
           // this.login = data
         })
       } else {
+        this.$toast.fail('请完整填写用户名与密码')
         return false
       }
     }
