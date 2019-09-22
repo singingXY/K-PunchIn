@@ -7,26 +7,34 @@ import { LoginUsers } from './data/user'
 export default {
   /**
    * mock start
+   * reply的参数为 (status, data, headers)
+   *
    */
   start() {
     let mock = new MockAdapter(axios)
     mock.onGet('/login').reply(config => {
-      let { username, password } = JSON.parse(config.data)
-      //return new Promise((resolve, reject) => {
-      return new Promise(resolve => {
-        let user = null
-        setTimeout(() => {
+      // console.log(config.params)
+      // if (config.data) {
+      //   let { username, password } = JSON.parse(config.data)
+      if (config.params) {
+        let { username, password } = config.params
+
+        return new Promise((resolve, reject) => {
+          //return new Promise(resolve => {
+          let user = null
           let hasUser = LoginUsers.some(u => {
             if (
               u.username === username &&
               u.password === password
             ) {
+              console.log(u.username + ',,' + u.password)
               user = JSON.parse(JSON.stringify(u))
               user.password = undefined
               return true
             }
           })
 
+          //resolve([状态值，{返回的数据}])
           if (hasUser) {
             resolve([
               200,
@@ -38,8 +46,8 @@ export default {
               { code: 500, msg: '账号或密码错误' }
             ])
           }
-        }, 1000)
-      })
+        })
+      }
     })
   }
 }

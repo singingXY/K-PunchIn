@@ -5,6 +5,7 @@
       src="./../assets/images/progress_icon_7.png"
       alt="s"
     />
+
     <div class="login">
       <van-cell-group>
         <van-field
@@ -35,7 +36,8 @@
 
 <script>
 import { CellGroup, Field, Button } from 'vant'
-import { login } from '../api/api'
+import { Image } from 'vant'
+import { Login } from '../api/api'
 export default {
   name: 'HelloWorld',
   props: {
@@ -44,21 +46,34 @@ export default {
   components: {
     [CellGroup.name]: CellGroup,
     [Field.name]: Field,
-    [Button.name]: Button
+    [Button.name]: Button,
+    [Image.name]: Image
   },
   data() {
     return {
-      login: []
+      login: {
+        username: 'admin',
+        password: '123456'
+      }
     }
   },
-  created() {
-    login({}).then(res => {
-      console.log(res)
-      const data = res.data
-      this.login = data
-    })
-  },
-  methods: { handleSubmit() {} }
+  methods: {
+    handleSubmit() {
+      if (this.login) {
+        let para = {
+          username: this.login.username,
+          password: this.login.password
+        }
+        Login(para).then(res => {
+          console.log(res)
+          // const data = res.data
+          // this.login = data
+        })
+      } else {
+        return false
+      }
+    }
+  }
 }
 </script>
 
