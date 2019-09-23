@@ -35,7 +35,7 @@
 
 <script>
 import { CellGroup, Field, Button } from 'vant'
-import { Login } from '../api/api'
+import { signIn } from '../api/api'
 export default {
   name: 'Login',
   components: {
@@ -58,10 +58,16 @@ export default {
           username: this.login.username,
           password: this.login.password
         }
-        Login(para).then(res => {
-          console.log(res)
+        signIn(para).then(res => {
+          // console.log(res)
           // const data = res.data
           // this.login = data
+          let { msg, code } = res.data
+          if (code !== 200) {
+            this.$toast.fail(msg)
+          } else {
+            this.$toast.success(msg)
+          }
         })
       } else {
         this.$toast.fail('请完整填写用户名与密码')

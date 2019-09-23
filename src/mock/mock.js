@@ -21,29 +21,31 @@ export default {
 
         return new Promise((resolve, reject) => {
           let user = null
-          let hasUser = LoginUsers.some(u => {
-            if (
-              u.username === username &&
-              u.password === password
-            ) {
-              user = JSON.parse(JSON.stringify(u))
-              user.password = undefined
-              return true
-            }
-          })
+          setTimeout(() => {
+            let hasUser = LoginUsers.some(u => {
+              if (
+                u.username === username &&
+                u.password === password
+              ) {
+                user = JSON.parse(JSON.stringify(u))
+                user.password = undefined
+                return true
+              }
+            })
 
-          //resolve([状态值，{返回的数据}])
-          if (hasUser) {
-            resolve([
-              200,
-              { code: 200, msg: '请求成功', user }
-            ])
-          } else {
-            resolve([
-              200,
-              { code: 500, msg: '账号或密码错误' }
-            ])
-          }
+            //resolve([状态值，{返回的数据}])
+            if (hasUser) {
+              resolve([
+                200,
+                { code: 200, msg: '登录成功', user }
+              ])
+            } else {
+              resolve([
+                200,
+                { code: 500, msg: '账号或密码错误' }
+              ])
+            }
+          }, 1000)
         })
       }
     })
