@@ -3,7 +3,7 @@ const LoginUsers = [
   // 制造登录账号，便于模拟登陆测试
   {
     id: 1,
-    username: 'admin',
+    username: '123456',
     password: '123456',
     name: '王某某'
   }
