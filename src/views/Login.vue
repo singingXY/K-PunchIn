@@ -1,7 +1,7 @@
 <template>
   <div class="warp">
     <img
-      src="./../assets/images/progress_icon_7.png"
+      src="@/assets/images/progress_icon_7.png"
       alt="s"
     />
     <p class="login-title">移动考勤</p>
@@ -20,6 +20,13 @@
         placeholder="登录密码"
         left-icon="edit"
       />
+      <div class="autoLogin">
+        <van-checkbox
+          v-model="autoLogin"
+          checked-color="#0f84c7"
+          >自动登录</van-checkbox
+        >
+      </div>
       <div class="login-btn">
         <van-button
           type="primary"
@@ -34,20 +41,22 @@
 </template>
 
 <script>
-import { Field, Button } from 'vant'
-import { signIn } from '../api/api'
+import { Field, Button, Checkbox } from 'vant'
+import { signIn } from '@/api/api'
 export default {
   name: 'Login',
   components: {
     [Field.name]: Field,
-    [Button.name]: Button
+    [Button.name]: Button,
+    [Checkbox.name]: Checkbox
   },
   data() {
     return {
       login: {
         username: '123456',
         password: ''
-      }
+      },
+      autoLogin: false
     }
   },
   methods: {
@@ -62,10 +71,14 @@ export default {
           // const data = res.data
           // this.login = data
           let { msg, code } = res.data
-          if (code !== 200) {
+          if (code !== 0) {
             this.$toast.fail(msg)
           } else {
             this.$toast(msg)
+            if (this.autoLogin) {
+              // 储存登录状态
+              localStorage.setItem('Login', true)
+            }
             this.$router.push({ path: '/home' })
           }
         })
@@ -105,6 +118,7 @@ body {
 .login >>> .van-cell {
   font-size: 16px;
   margin-bottom: 10px;
+  border-radius: 2px;
 }
 .login >>> .van-field__left-icon {
   margin-right: 10px;

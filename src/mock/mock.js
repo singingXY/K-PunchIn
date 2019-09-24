@@ -37,12 +37,12 @@ export default {
             if (hasUser) {
               resolve([
                 200,
-                { code: 200, msg: '登录成功', user }
+                { code: 0, msg: '登录成功', user }
               ])
             } else {
               resolve([
                 200,
-                { code: 500, msg: '账号或密码错误' }
+                { code: 1, msg: '账号或密码错误' }
               ])
             }
           }, 1000)
