@@ -8,14 +8,14 @@
 
     <div class="login">
       <van-field
-        v-model="login.username"
+        v-model="user.userName"
         clearable
         placeholder="手机号或邮箱"
         left-icon="user-o"
       />
 
       <van-field
-        v-model="login.password"
+        v-model="user.password"
         type="password"
         placeholder="登录密码"
         left-icon="edit"
@@ -52,8 +52,8 @@ export default {
   },
   data() {
     return {
-      login: {
-        username: '123456',
+      user: {
+        userName: '123',
         password: ''
       },
       autoLogin: false
@@ -61,25 +61,25 @@ export default {
   },
   methods: {
     handleSubmit() {
-      if (this.login.username && this.login.password) {
+      if (this.user.userName && this.user.password) {
         let para = {
-          username: this.login.username,
-          password: this.login.password
+          userName: this.user.userName,
+          password: this.user.password
         }
         signIn(para).then(res => {
           // console.log(res)
-          // const data = res.data
-          // this.login = data
-          let { msg, code } = res.data
-          if (code !== 0) {
-            this.$toast.fail(msg)
-          } else {
-            this.$toast(msg)
+          let data = res.data
+          let { message, code } = data
+          if (code == 0) {
+            this.user = data.data.user
+            this.$toast('登录成功')
             if (this.autoLogin) {
               // 储存登录状态
               localStorage.setItem('Login', true)
             }
             this.$router.push({ path: '/home' })
+          } else {
+            this.$toast.fail(message)
           }
         })
       } else {

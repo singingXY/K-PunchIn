@@ -13,22 +13,22 @@ export default {
   start() {
     let mock = new MockAdapter(axios)
     mock.onGet('/login').reply(config => {
-      // console.log(config.params)
+      // console.log(config)
       // if (config.data) {
-      //   let { username, password } = JSON.parse(config.data)
+      //   let { userName, password } = JSON.parse(config.data)
+      // 由于data: undefined，所以改为config.params
       if (config.params) {
-        let { username, password } = config.params
-
+        let { userName, password } = config.params
         return new Promise((resolve, reject) => {
-          let user = null
+          // let user = null
           setTimeout(() => {
             let hasUser = LoginUsers.some(u => {
               if (
-                u.username === username &&
+                u.userName === userName &&
                 u.password === password
               ) {
-                user = JSON.parse(JSON.stringify(u))
-                user.password = undefined
+                //user = JSON.parse(JSON.stringify(u))
+                // user.password = undefined
                 return true
               }
             })
@@ -37,12 +37,49 @@ export default {
             if (hasUser) {
               resolve([
                 200,
-                { code: 0, msg: '登录成功', user }
+                {
+                  code: '0',
+                  data: {
+                    daily: '',
+                    user: {
+                      userId: '111111',
+                      userName: '123',
+                      password: '123'
+                    },
+                    attendance: [
+                      {
+                        id:
+                          '551a82b8ea624562a0e7d416664648a1',
+                        longitude: '123.234',
+                        latitude: '123.456',
+                        address: '文曲路',
+                        userId: '111111',
+                        type: '0',
+                        date: '2018-08-23 07:13:14'
+                      },
+                      {
+                        id:
+                          '5b486c33405c401d846531a16d586562',
+                        longitude: '123.234',
+                        latitude: '123.456',
+                        address: '文曲路',
+                        userId: '111111',
+                        type: '1',
+                        date: '2018-08-23 07:12:39'
+                      }
+                    ]
+                  },
+                  desc: '操作成功'
+                }
               ])
             } else {
               resolve([
                 200,
-                { code: 1, msg: '账号或密码错误' }
+                {
+                  code: '1',
+                  message: '用户名或密码不正确',
+                  desc: 'error'
+                }
               ])
             }
           }, 1000)

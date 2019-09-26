@@ -3,8 +3,8 @@ const LoginUsers = [
   // 制造登录账号，便于模拟登陆测试
   {
     id: 1,
-    username: '123456',
-    password: '123456',
+    userName: '123',
+    password: '123',
     name: '王某某'
   }
 ]
