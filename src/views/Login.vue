@@ -37,6 +37,7 @@
         >
       </div>
     </div>
+    <div class="container"></div>
   </div>
 </template>
 
@@ -56,7 +57,7 @@ export default {
         userName: '123',
         password: ''
       },
-      autoLogin: false
+      autoLogin: true
     }
   },
   methods: {
@@ -77,7 +78,7 @@ export default {
               // 储存登录状态
               localStorage.setItem('Login', true)
             }
-            this.$router.push({ path: '/home' })
+            this.$router.push('/')
           } else {
             this.$toast.fail(message)
           }
@@ -100,13 +101,20 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-body {
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  background-color: #f7f7f7;
+  z-index: -1;
 }
 .warp {
   margin-top: 60px;
   padding: 0 20px;
   text-align: center;
-  background: #f7f7f7;
 }
 .login-title {
   font-size: 24px;

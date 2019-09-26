@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    home
+    <van-nav-bar title="云网科技" />
   </div>
 </template>
 
@@ -8,13 +8,13 @@
 // @ is an alias to /src
 
 export default {
-  name: 'home',
   created() {
     if (localStorage.getItem('Login')) {
       //登录了，留在当前页
     } else {
       this.$router.push('/login') // 未登录，跳登录页
     }
-  }
+  },
+  methods: {}
 }
 </script>

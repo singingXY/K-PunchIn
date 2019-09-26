@@ -9,11 +9,6 @@ export const signIn = params => {
 export const getUserList = params => {
   return axios.get(`/user/list`, { params: params })
 }
-export const getTodoList = params => {
-  return axios.get(`/todo/list`, {
-    params: params
-  })
-}
 export const addTodo = params => {
   return axios
     .post(`/todo/addTodo`, params)
