@@ -35,6 +35,12 @@
         </p>
       </div>
     </div>
+    <div class="van-doc-block__title">
+      <span>今天是 </span>
+      <span class="more"
+        >更多<img src="@/assets/images/arrow.png" alt="" />
+      </span>
+    </div>
   </div>
 </template>
 
@@ -86,5 +92,22 @@ export default {
 }
 .user-position {
   vertical-align: sub;
+}
+
+.van-doc-block__title {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 30px 15px 15px;
+  background: #f8f8f8;
+  font-size: 22px;
+  line-height: 1;
+}
+.van-doc-block__title .more {
+  display: flex;
+  color: #a9a7a8;
+}
+.van-doc-block__title .more img {
+  width: 20px;
 }
 </style>
