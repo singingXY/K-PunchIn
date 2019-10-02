@@ -11,14 +11,13 @@
         v-model="user.userName"
         clearable
         placeholder="手机号或邮箱"
-        left-icon="user-o"
+        left-icon="/../../../assets/images/user.png"
       />
-
       <van-field
         v-model="user.password"
         type="password"
         placeholder="登录密码"
-        left-icon="edit"
+        left-icon="lock"
       />
       <div class="autoLogin">
         <van-checkbox
