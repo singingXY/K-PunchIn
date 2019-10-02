@@ -11,13 +11,13 @@
         v-model="user.userName"
         clearable
         placeholder="手机号或邮箱"
-        left-icon="/../../../assets/images/user.png"
+        left-icon="https://raw.githubusercontent.com/singingXY/K-PunchIn/master/src/assets/images/user.png"
       />
       <van-field
         v-model="user.password"
         type="password"
         placeholder="登录密码"
-        left-icon="lock"
+        left-icon="https://raw.githubusercontent.com/singingXY/K-PunchIn/master/src/assets/images/lock.png"
       />
       <div class="autoLogin">
         <van-checkbox

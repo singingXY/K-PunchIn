@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import 'lib-flexible' // 移动端适配
 import Mock from './mock' // 引入mock模块
 Mock.start() //并且执行初始化函数
 
