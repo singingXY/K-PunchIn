@@ -41,6 +41,31 @@
         >更多<img src="@/assets/images/arrow.png" alt="" />
       </span>
     </div>
+    <div class="count">
+      <div class="punch">
+        <img src="../assets/images/punch.png" alt="" />
+        <span>打卡数：25</span>
+      </div>
+      <div class="daily">
+        <img src="../assets/images/daily.png" alt="" />
+        <span>日报数：26</span>
+      </div>
+    </div>
+    <div class="van-doc-block__title">
+      <span>我的日报</span>
+    </div>
+    <div class="mydaily">
+      <p>您今天还没有写日报~</p>
+      <img src="../assets/images/wd.png" alt="" />
+    </div>
+    <div class="van-doc-block__title">
+      <span>打卡记录</span>
+    </div>
+    <div class="mypunch">
+      <p>您今天还没有打卡哦~</p>
+      <div class="punch-btn">上班打卡</div>
+      <p class="location">当前位置:</p>
+    </div>
   </div>
 </template>
 
@@ -109,5 +134,51 @@ export default {
 }
 .van-doc-block__title .more img {
   width: 20px;
+}
+.count {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 5vw 41px;
+  line-height: 56px;
+}
+.count span {
+  display: inline-block;
+}
+.count img {
+  height: 56px;
+  margin-right: 16px;
+  vertical-align: top;
+}
+.mydaily {
+  padding: 15px 0 25px;
+  text-align: center;
+}
+.mydaily p {
+  line-height: 50px;
+}
+.mydaily img {
+  width: 56px;
+}
+.mypunch {
+  padding-top: 16px;
+  text-align: center;
+}
+.mypunch p {
+  line-height: 70px;
+}
+.punch-btn {
+  display: inline-block;
+  width: 135px;
+  height: 135px;
+  line-height: 135px;
+  margin-bottom: 18px;
+  border: solid 2px #bdbdbd;
+  border-radius: 50%;
+}
+.location {
+  line-height: 58px;
+  text-align: left;
+  margin-left: 15px;
 }
 </style>
