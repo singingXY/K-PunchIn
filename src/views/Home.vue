@@ -64,7 +64,20 @@
     <div class="mypunch">
       <p>您今天还没有打卡哦~</p>
       <div class="punch-btn">上班打卡</div>
-      <p class="location">当前位置:</p>
+      <p class="location">当前位置:{{ nowAddress }}</p>
+
+      <baidu-map
+        class="bm-view"
+        :center="location"
+        :zoom="zoom"
+        @ready="handler"
+      >
+        <bm-geolocation
+          anchor="BMAP_ANCHOR_BOTTOM_RIGHT"
+          :showAddressBar="true"
+          :autoLocation="true"
+        ></bm-geolocation>
+      </baidu-map>
     </div>
   </div>
 </template>
@@ -74,6 +87,16 @@ import { Image } from 'vant'
 // @ is an alias to /src
 
 export default {
+  data() {
+    return {
+      location: {
+        lng: 120.619,
+        lat: 31.318
+      },
+      zoom: 14,
+      nowAddress: ''
+    }
+  },
   components: {
     [Image.name]: Image
   },
@@ -84,7 +107,36 @@ export default {
       this.$router.push('/login') // 未登录，跳登录页
     }
   },
-  methods: {}
+  methods: {
+    getLocationPoint(e) {
+      this.lng = e.point.lng
+      this.lat = e.point.lat
+    },
+    handler() {
+      let _this = this
+      var geolocation = new window.BMap.Geolocation()
+      geolocation.getCurrentPosition(r => {
+        _this.location = {
+          lng: r.longitude,
+          lat: r.latitude
+        }
+      })
+      /* 创建地址解析器的实例 */
+      let geoCoder = new window.BMap.Geocoder()
+      /* 利用坐标获取地址的详细信息 */
+      // geoCoder.getLocation(_this.location, res => {
+      geoCoder.getLocation(
+        new window.BMap.Point(
+          _this.location.lng,
+          _this.location.lat
+        ),
+        res => {
+          //console.log(res.address)
+          this.nowAddress = res.address
+        }
+      )
+    }
+  }
 }
 </script>
 <style>
@@ -180,5 +232,9 @@ export default {
   line-height: 58px;
   text-align: left;
   margin-left: 15px;
+}
+.bm-view {
+  width: 100%;
+  height: 300px;
 }
 </style>
