@@ -6,11 +6,20 @@ export const signIn = params => {
   return axios.get(`/login`, { params })
 }
 
-export const getUserList = params => {
-  return axios.get(`/user/list`, { params: params })
-}
-export const addTodo = params => {
+export const recodeAttendance = params => {
   return axios
-    .post(`/todo/addTodo`, params)
+    .post(`/recodeAttendance`, params)
+    .then(res => res.data)
+}
+
+export const recodeDaily = params => {
+  return axios
+    .post(`/recodeDaily`, params)
+    .then(res => res.data)
+}
+
+export const getAllDailyAndAttendance = params => {
+  return axios
+    .post(`/getAllDailyAndAttendance`, params)
     .then(res => res.data)
 }
