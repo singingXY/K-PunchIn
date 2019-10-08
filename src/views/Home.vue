@@ -55,8 +55,10 @@
       <span>我的日报</span>
     </div>
     <div class="mydaily">
-      <p>您今天还没有写日报~</p>
-      <img src="@/assets/images/wd.png" alt="" />
+      <template>
+        <p>您今天还没有写日报~</p>
+        <img src="@/assets/images/wd.png" alt=""
+      /></template>
     </div>
     <div class="van-doc-block__title">
       <span>打卡记录</span>
@@ -89,6 +91,7 @@ import { Image } from 'vant'
 export default {
   data() {
     return {
+      user: [],
       location: {
         lng: 120.619,
         lat: 31.318
@@ -106,6 +109,7 @@ export default {
     } else {
       this.$router.push('/login') // 未登录，跳登录页
     }
+    console.log(localStorage.getItem('User'))
   },
   methods: {
     handler() {

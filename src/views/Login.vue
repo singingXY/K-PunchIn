@@ -1,6 +1,7 @@
 <template>
   <div class="warp">
     <img
+      class="logo"
       src="@/assets/images/progress_icon_7.png"
       alt="s"
     />
@@ -67,7 +68,7 @@ export default {
           password: this.user.password
         }
         signIn(para).then(res => {
-          // console.log(res)
+          console.log(res)
           let data = res.data
           let { message, code } = data
           if (code == 0) {
@@ -76,8 +77,19 @@ export default {
             if (this.autoLogin) {
               // 储存登录状态
               localStorage.setItem('Login', true)
+              localStorage.setItem(
+                'User',
+                JSON.stringify(this.user)
+              )
             }
+            //
             this.$router.push('/')
+            // this.$router.push({
+            //   name: 'home',
+            //   params: {
+            //     data
+            //   }
+            // })
           } else {
             this.$toast.fail(message)
           }
@@ -111,33 +123,47 @@ li {
   z-index: -1;
 }
 .warp {
-  margin-top: 60px;
-  padding: 0 20px;
+  margin-top: 137px;
+  padding: 0 42px;
   text-align: center;
 }
+.logo {
+  width: 218px;
+}
 .login-title {
-  font-size: 24px;
-  margin: 10px 0 0 0;
+  font-size: 30px;
+  margin: 20px 0 0 0;
 }
 .login {
   margin-top: 40px;
 }
 .login >>> .van-cell {
-  font-size: 16px;
-  margin-bottom: 10px;
+  font-size: 22px;
+  margin-bottom: 22px;
   border-radius: 2px;
 }
 .login >>> .van-field__left-icon {
-  margin-right: 10px;
+  margin-right: 30px;
 }
 .login >>> .van-field__left-icon .van-icon {
-  font-size: 20px;
+  font-size: 30px;
   color: #8a8a8a;
 }
 .login >>> .van-cell:not(:last-child)::after {
   border-bottom: 0;
 }
+.login >>> .van-checkbox__label {
+  color: #737373;
+  font-size: 22px;
+}
 .login-btn {
-  margin-top: 30px;
+  margin-top: 90px;
+}
+.login-btn >>> .van-button--large {
+  height: 60px;
+  line-height: 58px;
+}
+.login-btn >>> .van-button__text {
+  font-size: 22px;
 }
 </style>
