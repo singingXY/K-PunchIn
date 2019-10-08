@@ -84,12 +84,6 @@ export default {
             }
             //
             this.$router.push('/')
-            // this.$router.push({
-            //   name: 'home',
-            //   params: {
-            //     data
-            //   }
-            // })
           } else {
             this.$toast.fail(message)
           }
