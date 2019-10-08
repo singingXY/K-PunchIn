@@ -43,11 +43,11 @@
     </div>
     <div class="count">
       <div class="punch">
-        <img src="../assets/images/punch.png" alt="" />
+        <img src="@/assets/images/punch.png" alt="" />
         <span>打卡数：25</span>
       </div>
       <div class="daily">
-        <img src="../assets/images/daily.png" alt="" />
+        <img src="@/assets/images/daily.png" alt="" />
         <span>日报数：26</span>
       </div>
     </div>
@@ -56,7 +56,7 @@
     </div>
     <div class="mydaily">
       <p>您今天还没有写日报~</p>
-      <img src="../assets/images/wd.png" alt="" />
+      <img src="@/assets/images/wd.png" alt="" />
     </div>
     <div class="van-doc-block__title">
       <span>打卡记录</span>
