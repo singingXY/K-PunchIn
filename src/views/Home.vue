@@ -36,10 +36,18 @@
       </div>
     </div>
     <div class="van-doc-block__title">
-      <span>今天是 {{ 0 | formatDate }}</span>
-      <span class="more"
-        >更多<img src="@/assets/images/arrow.png" alt="" />
-      </span>
+      <van-cell
+        title="今天是"
+        is-link
+        value="更多"
+        to="/list"
+      >
+        <template slot="title">
+          <span class="custom-title"
+            >今天是 {{ 0 | formatDate }}</span
+          >
+        </template>
+      </van-cell>
     </div>
     <div class="count">
       <div class="punch">
@@ -52,7 +60,7 @@
       </div>
     </div>
     <div class="van-doc-block__title">
-      <span>我的日报</span>
+      <van-cell value="我的日报" />
     </div>
     <div class="mydaily">
       <template v-if="this.data.daily">
@@ -64,7 +72,7 @@
       /></template>
     </div>
     <div class="van-doc-block__title">
-      <span>打卡记录</span>
+      <van-cell value="打卡记录" />
     </div>
     <div class="mypunch">
       <template v-if="attendanceLength">
@@ -114,7 +122,7 @@
 
 <script>
 import { signIn } from '@/api/api'
-import { Image } from 'vant'
+import { Image, Cell } from 'vant'
 // @ is an alias to /src
 
 export default {
@@ -133,7 +141,8 @@ export default {
     }
   },
   components: {
-    [Image.name]: Image
+    [Image.name]: Image,
+    [Cell.name]: Cell
   },
   created() {
     if (localStorage.getItem('Login')) {
@@ -214,9 +223,6 @@ export default {
 }
 </script>
 <style>
-.van-nav-bar {
-  background: #f8f8f8;
-}
 .van-hairline--bottom::after {
   border-bottom-width: 0;
 }
@@ -245,21 +251,9 @@ export default {
   vertical-align: sub;
 }
 
-.van-doc-block__title {
-  display: flex;
-  justify-content: space-between;
-  margin: 0;
-  padding: 30px 15px 15px;
-  background: #f8f8f8;
+.van-doc-block__title .van-cell {
+  background-color: #f8f8f8;
   font-size: 22px;
-  line-height: 1;
-}
-.van-doc-block__title .more {
-  display: flex;
-  color: #a9a7a8;
-}
-.van-doc-block__title .more img {
-  width: 20px;
 }
 .count {
   display: flex;
@@ -280,6 +274,7 @@ export default {
 .mydaily {
   padding: 15px 5vw 25px;
   text-align: center;
+  font-size: 22px;
 }
 .mydaily p {
   line-height: 50px;
@@ -288,7 +283,6 @@ export default {
   width: 56px;
 }
 .mydaily .mydaily-text {
-  font-size: 22px;
   text-align: left;
 }
 .mypunch {
