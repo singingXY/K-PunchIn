@@ -11,7 +11,10 @@
           v-for="dailyList in daily.list"
           :key="dailyList.id"
         >
-          {{ dailyList }}
+          <span :class="'type' + dailyList.type">{{
+            dailyList.type
+          }}</span>
+          {{ dailyList.date }}{{ dailyList.address }}
         </p>
         {{ daily.content }}
       </van-collapse-item>
