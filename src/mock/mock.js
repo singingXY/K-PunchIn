@@ -19,7 +19,7 @@ export default {
       // 由于data: undefined，所以改为config.params
       if (config.params) {
         let { userName, password } = config.params
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
           // let user = null
           setTimeout(() => {
             let hasUser = LoginUsers.some(u => {

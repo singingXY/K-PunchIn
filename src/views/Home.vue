@@ -56,7 +56,7 @@
     </div>
     <div class="mydaily">
       <template v-if="this.data.daily">
-        {{ this.data.daily }}
+        <p class="mydaily-text">{{ this.data.daily }}</p>
       </template>
       <template v-else>
         <p>您今天还没有写日报~</p>
@@ -267,6 +267,7 @@ export default {
   align-items: center;
   padding: 17px 5vw 41px;
   line-height: 56px;
+  font-size: 22px;
 }
 .count span {
   display: inline-block;
@@ -277,7 +278,7 @@ export default {
   vertical-align: top;
 }
 .mydaily {
-  padding: 15px 0 25px;
+  padding: 15px 5vw 25px;
   text-align: center;
 }
 .mydaily p {
@@ -285,6 +286,10 @@ export default {
 }
 .mydaily img {
   width: 56px;
+}
+.mydaily .mydaily-text {
+  font-size: 22px;
+  text-align: left;
 }
 .mypunch {
   padding-top: 16px;
