@@ -46,3 +46,15 @@ export default {
   methods: {}
 }
 </script>
+<style>
+.van-collapse {
+  margin-top: 20px;
+  background: #f8f8f8;
+}
+.van-collapse .van-cell {
+  font-size: 22px;
+}
+.van-collapse p {
+  font-size: 20px;
+}
+</style>
