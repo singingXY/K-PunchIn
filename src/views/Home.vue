@@ -10,7 +10,7 @@
         />
       </div>
       <div class="user-info">
-        <p class="user-name">孙超</p>
+        <p class="user-name">{{ this.user.userName }}</p>
         <p>
           <svg
             class="user-position"
@@ -55,7 +55,10 @@
       <span>我的日报</span>
     </div>
     <div class="mydaily">
-      <template>
+      <template v-if="this.data.daily">
+        {{ this.data.daily }}
+      </template>
+      <template v-else>
         <p>您今天还没有写日报~</p>
         <img src="@/assets/images/wd.png" alt=""
       /></template>
@@ -64,10 +67,35 @@
       <span>打卡记录</span>
     </div>
     <div class="mypunch">
-      <p>您今天还没有打卡哦~</p>
-      <div class="punch-btn">上班打卡</div>
+      <template v-if="attendanceLength">
+        <div
+          class="punch-text"
+          v-for="attendance in this.data.attendance"
+          :key="attendance.id"
+        >
+          <p>
+            {{ attendance.type | getType }}
+            {{ attendance.date }}
+          </p>
+          <p class="punch-text-2">
+            <img
+              src="../assets/images/position.png"
+              alt=""
+            />
+            {{ attendance.address }}
+          </p>
+        </div>
+        <div class="punch-btn" v-if="attendanceLength == 1">
+          下班打卡
+        </div>
+      </template>
+      <template v-else>
+        <p>您今天还没有打卡哦~</p>
+        <div class="punch-btn">上班打卡</div>
+      </template>
+    </div>
+    <div class="mypunch " :class="{ baidumap: baidumap }">
       <p class="location">当前位置:{{ nowAddress }}</p>
-
       <baidu-map
         class="bm-view"
         :center="location"
@@ -85,6 +113,7 @@
 </template>
 
 <script>
+import { signIn } from '@/api/api'
 import { Image } from 'vant'
 // @ is an alias to /src
 
@@ -92,12 +121,15 @@ export default {
   data() {
     return {
       user: [],
+      data: [],
       location: {
         lng: 120.619,
         lat: 31.318
       },
       zoom: 14,
-      nowAddress: ''
+      nowAddress: '',
+      baidumap: false,
+      attendanceLength: 0
     }
   },
   components: {
@@ -109,7 +141,22 @@ export default {
     } else {
       this.$router.push('/login') // 未登录，跳登录页
     }
-    console.log(localStorage.getItem('User'))
+    this.user = JSON.parse(localStorage.getItem('User'))
+    signIn({
+      userName: this.user.userName,
+      password: this.user.password
+    }).then(res => {
+      this.data = res.data.data
+      if (res.data.code == 0) {
+        //console.log(this.data.attendance)
+        if (this.data.attendance.length) {
+          this.attendanceLength = this.data.attendance.length
+          if (this.attendanceLength == 2) {
+            this.baidumap = true
+          }
+        }
+      }
+    })
   },
   methods: {
     handler() {
@@ -124,14 +171,12 @@ export default {
       /* 创建地址解析器的实例 */
       let geoCoder = new window.BMap.Geocoder()
       /* 利用坐标获取地址的详细信息 */
-      // geoCoder.getLocation(_this.location, res => {
       geoCoder.getLocation(
         new window.BMap.Point(
           _this.location.lng,
           _this.location.lat
         ),
         res => {
-          //console.log(res.address)
           this.nowAddress = res.address
         }
       )
@@ -155,6 +200,15 @@ export default {
       } else {
         return y + '年' + MM + '月' + d + '日'
       }
+    },
+    getType(value) {
+      let result = value
+      if (value == 0) {
+        result = '上班'
+      } else if (value == 1) {
+        result = '下班'
+      }
+      return result
     }
   }
 }
@@ -256,5 +310,34 @@ export default {
 .bm-view {
   width: 100%;
   height: 300px;
+}
+.punch-text {
+  text-align-last: left;
+  padding: 10px 20px 0;
+  font-size: 22px;
+  line-height: 42px;
+}
+.punch-text p img {
+  vertical-align: text-bottom;
+  width: 26px;
+}
+.punch-text .punch-text-2 {
+  position: relative;
+  font-size: 19px;
+  line-height: 35px;
+  padding: 12px 0 2px;
+}
+.punch-text-2::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* prettier-ignore */
+  height: 2PX;
+  width: 55vw;
+  background: #cbcbcb;
+}
+.baidumap {
+  display: none;
 }
 </style>
