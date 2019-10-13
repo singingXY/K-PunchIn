@@ -78,7 +78,7 @@
       <template v-if="attendanceLength">
         <div
           class="punch-text"
-          v-for="attendance in this.data.attendance"
+          v-for="attendance in this.data[0].attendance"
           :key="attendance.id"
         >
           <p>
@@ -157,9 +157,9 @@ export default {
     }).then(res => {
       this.data = res.data.data
       if (res.data.code == 0) {
-        //console.log(this.data.attendance)
-        if (this.data.attendance.length) {
-          this.attendanceLength = this.data.attendance.length
+        //console.log(this.data[0].attendance)
+        if (this.data[0].attendance.length) {
+          this.attendanceLength = this.data[0].attendance.length
           if (this.attendanceLength == 2) {
             this.baidumap = true
           }
