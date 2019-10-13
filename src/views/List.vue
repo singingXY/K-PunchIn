@@ -5,28 +5,30 @@
       title="我的考勤"
       @click-left="onClickLeft"
     />
-    <van-collapse v-model="activeNames">
-      <van-collapse-item
-        :title="daily.date"
-        v-for="daily in daily"
-        :key="daily.date"
-      >
-        <p
-          v-for="dailyList in daily.list"
-          :key="dailyList.id"
+    <van-skeleton :row="16" :loading="loading">
+      <van-collapse v-model="activeNames">
+        <van-collapse-item
+          :title="daily.date"
+          v-for="daily in daily"
+          :key="daily.date"
         >
-          <span
-            class="daily-icon"
-            :class="'type' + dailyList.type"
-          ></span>
-          <span class="daily-time">{{
-            dailyList.date | dailyDate
-          }}</span>
-          {{ dailyList.address }}
-        </p>
-        {{ daily.content }}
-      </van-collapse-item>
-    </van-collapse>
+          <p
+            v-for="dailyList in daily.list"
+            :key="dailyList.id"
+          >
+            <span
+              class="daily-icon"
+              :class="'type' + dailyList.type"
+            ></span>
+            <span class="daily-time">{{
+              dailyList.date | dailyDate
+            }}</span>
+            {{ dailyList.address }}
+          </p>
+          {{ daily.content }}
+        </van-collapse-item>
+      </van-collapse>
+    </van-skeleton>
   </div>
 </template>
 <script>
@@ -37,7 +39,8 @@ export default {
     return {
       user: [],
       activeNames: [],
-      daily: []
+      daily: [],
+      loading: true
     }
   },
   components: {
@@ -51,10 +54,12 @@ export default {
     getAllDailyAndAttendance({ userId: userId }).then(
       res => {
         this.daily = res.data
-        console.log(this.daily)
+        //console.log(this.daily)
+        this.loading = false
       }
     )
   },
+  mounted() {},
   methods: {
     onClickLeft() {
       this.$router.go(-1)

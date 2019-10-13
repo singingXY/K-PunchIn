@@ -62,25 +62,27 @@ export default {
         if (config.data) {
           let { userId } = JSON.parse(config.data)
           return new Promise(resolve => {
-            if (userId) {
-              resolve([
-                200,
-                {
-                  code: '0',
-                  data: AllList,
-                  desc: '操作成功'
-                }
-              ])
-            } else {
-              resolve([
-                200,
-                {
-                  code: '1',
-                  message: '请传入用户id',
-                  desc: 'error'
-                }
-              ])
-            }
+            setTimeout(() => {
+              if (userId) {
+                resolve([
+                  200,
+                  {
+                    code: '0',
+                    data: AllList,
+                    desc: '操作成功'
+                  }
+                ])
+              } else {
+                resolve([
+                  200,
+                  {
+                    code: '1',
+                    message: '请传入用户id',
+                    desc: 'error'
+                  }
+                ])
+              }
+            }, 1000)
           })
         }
       })
