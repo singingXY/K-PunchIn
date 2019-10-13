@@ -1,6 +1,10 @@
 <template>
   <div class="list">
-    <van-nav-bar title="我的考勤" />
+    <van-nav-bar
+      left-arrow
+      title="我的考勤"
+      @click-left="onClickLeft"
+    />
     <van-collapse v-model="activeNames">
       <van-collapse-item
         :title="daily.date"
@@ -51,6 +55,11 @@ export default {
       }
     )
   },
+  methods: {
+    onClickLeft() {
+      this.$router.go(-1)
+    }
+  },
   filters: {
     dailyDate(e) {
       var date = new Date(e)
@@ -60,6 +69,9 @@ export default {
 }
 </script>
 <style scoped>
+.list >>> .van-nav-bar .van-icon {
+  color: #99a;
+}
 .list >>> .van-collapse {
   margin-top: 20px;
   background: #f8f8f8;
