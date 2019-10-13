@@ -11,6 +11,7 @@ export default {
    */
   start() {
     let mock = new MockAdapter(axios)
+    //登录接口
     mock.onGet('/login').reply(config => {
       //console.log(config)
       // if (config.data) {
@@ -54,6 +55,7 @@ export default {
         })
       }
     })
+    //获取考勤和日报接口
     mock
       .onPost('/getAllDailyAndAttendance')
       .reply(config => {
@@ -82,5 +84,61 @@ export default {
           })
         }
       })
+    //考勤打卡接口
+    mock.onPost('/recodeAttendance').reply(config => {
+      if (config.data) {
+        let { punch } = JSON.parse(config.data)
+        return new Promise(resolve => {
+          if (punch) {
+            resolve([
+              200,
+              {
+                code: '0',
+                data: '打卡成功',
+                desc: '操作成功'
+              }
+            ])
+          } else {
+            resolve([
+              200,
+              {
+                code: '1',
+                message:
+                  '打卡失败,未传入用户id或未指定打卡类型',
+                desc: 'error'
+              }
+            ])
+          }
+        })
+      }
+    })
+    //写日报接口
+    mock.onPost('/recodeDaily').reply(config => {
+      if (config.data) {
+        let { Daily } = JSON.parse(config.data)
+        return new Promise(resolve => {
+          if (Daily) {
+            resolve([
+              200,
+              {
+                code: '0',
+                data: '记录日报成功',
+                desc: '操作成功'
+              }
+            ])
+          } else {
+            resolve([
+              200,
+              {
+                code: '1',
+                message:
+                  '记录日报失败,未传入用户id或日报内容',
+                desc: 'error'
+              }
+            ])
+          }
+        })
+      }
+    })
   }
 }
