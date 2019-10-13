@@ -47,6 +47,7 @@ export default {
     getAllDailyAndAttendance({ userId: userId }).then(
       res => {
         this.daily = res.data
+        console.log(this.daily)
       }
     )
   },
@@ -58,24 +59,24 @@ export default {
   }
 }
 </script>
-<style>
-.van-collapse {
+<style scoped>
+.list >>> .van-collapse {
   margin-top: 20px;
   background: #f8f8f8;
 }
-.van-collapse .van-cell {
+.list >>> .van-collapse .van-cell {
   font-size: 22px;
   background: #f8f8f8;
 }
-.van-cell:not(:last-child)::after {
+.list >>> .van-cell:not(:last-child)::after {
   border-bottom: 1px solid #fff;
 }
 
-.van-hairline--top-bottom::after,
-.van-hairline-unset--top-bottom::after {
+.list >>> .van-hairline--top-bottom::after,
+.list >>> .van-hairline-unset--top-bottom::after {
   border-color: #fff;
 }
-.van-collapse p {
+.list >>> .van-collapse p {
   font-size: 20px;
   line-height: 34px;
   margin-bottom: 7px;

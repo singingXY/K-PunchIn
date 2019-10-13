@@ -3,6 +3,7 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { LoginUsers, LoginData } from './data/user'
+import { AllList } from './data/list'
 export default {
   /**
    * mock start
@@ -64,34 +65,7 @@ export default {
                 200,
                 {
                   code: '0',
-                  data: [
-                    {
-                      date: '2018-08-23',
-                      list: [
-                        {
-                          id:
-                            '0b97a21d57644311aa9dd25c1d5b2666',
-                          longitude: '123.234',
-                          latitude: '123.456',
-                          address: '文曲路',
-                          userId: '123',
-                          type: '1',
-                          date: 1534994990000
-                        },
-                        {
-                          id:
-                            '4e7629c35fe341d58d5dc112aae8dce5',
-                          longitude: '123.234',
-                          latitude: '123.456',
-                          address: '文曲路',
-                          userId: '123',
-                          type: '0',
-                          date: 1534994963000
-                        }
-                      ],
-                      content: '上班打卡'
-                    }
-                  ],
+                  data: AllList,
                   desc: '操作成功'
                 }
               ])
