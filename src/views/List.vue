@@ -15,7 +15,9 @@
             class="daily-icon"
             :class="'type' + dailyList.type"
           ></span>
-          <span> {{ dailyList.date | dailyDate }}</span>
+          <span class="daily-time">{{
+            dailyList.date | dailyDate
+          }}</span>
           {{ dailyList.address }}
         </p>
         {{ daily.content }}
@@ -75,18 +77,28 @@ export default {
 }
 .van-collapse p {
   font-size: 20px;
+  line-height: 34px;
+  margin-bottom: 7px;
+}
+.daily-time {
+  display: inline-block;
+  color: #333;
+  font-size: 22px;
+  margin: 0 18px 0 7px;
 }
 .daily-icon {
   display: inline-block;
   background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 0 center;
   width: 34px;
   height: 34px;
-  vertical-align: text-bottom;
+  vertical-align: middle;
 }
 .daily-icon.type0 {
-  background: url(../assets/images/type0.png) center;
+  background-image: url(../assets/images/type0.png);
 }
 .daily-icon.type1 {
-  background: url(../assets/images/type1.png) center;
+  background-image: url(../assets/images/type1.png);
 }
 </style>
