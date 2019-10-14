@@ -65,13 +65,27 @@
       <van-cell value="我的日报" />
     </div>
     <div class="mydaily">
-      <template v-if="this.data.daily">
-        <p class="mydaily-text">{{ this.data.daily }}</p>
+      <template v-if="!this.data.daily">
+        <div @click="dailyReportShow = true">
+          <p>您今天还没有写日报~</p>
+          <img src="@/assets/images/wd.png" alt="" />
+        </div>
+        <van-dialog
+          v-model="dailyReportShow"
+          show-cancel-button
+          :beforeClose="beforeClose"
+        >
+          <textarea
+            class="daily-report"
+            v-model="daily"
+            placeholder="请输入日报内容"
+          >
+          </textarea>
+        </van-dialog>
       </template>
       <template v-else>
-        <p>您今天还没有写日报~</p>
-        <img src="@/assets/images/wd.png" alt=""
-      /></template>
+        <p class="mydaily-text">{{ this.data.daily }}</p>
+      </template>
     </div>
     <div class="van-doc-block__title">
       <van-cell value="打卡记录" />
@@ -129,8 +143,8 @@
 </template>
 
 <script>
-import { signIn } from '@/api/api'
-import { Image, Cell } from 'vant'
+import { signIn, recodeDaily } from '@/api/api'
+import { Image, Cell, Dialog } from 'vant'
 // @ is an alias to /src
 
 export default {
@@ -138,6 +152,7 @@ export default {
     return {
       user: [],
       data: [],
+      daily: '',
       location: {
         lng: 120.619,
         lat: 31.318
@@ -146,12 +161,14 @@ export default {
       nowAddress: '',
       baidumap: false,
       attendanceLength: 0,
-      loading: true
+      loading: true,
+      dailyReportShow: false
     }
   },
   components: {
     [Image.name]: Image,
-    [Cell.name]: Cell
+    [Cell.name]: Cell,
+    [Dialog.Component.name]: Dialog.Component
   },
   created() {
     if (localStorage.getItem('Login')) {
@@ -168,7 +185,7 @@ export default {
     }).then(res => {
       this.data = res.data.data
       if (res.data.code == 0) {
-        //console.log(this.data[0].attendance)
+        //console.log(this.data[0])
         if (this.data[0].attendance.length) {
           this.attendanceLength = this.data[0].attendance.length
           if (this.attendanceLength == 2) {
@@ -201,6 +218,29 @@ export default {
           this.nowAddress = res.address
         }
       )
+    },
+    beforeClose(action, done) {
+      if (action === 'confirm') {
+        if (!this.daily) {
+          this.$toast('请输入日报内容')
+          done(false) //不关闭弹框
+        } else {
+          recodeDaily({
+            userId: this.user.userId,
+            content: this.daily
+          }).then(res => {
+            if (res.code == 0) {
+              this.$toast(res.data)
+            } else {
+              console.log(res.message)
+            }
+          })
+          this.data.daily = this.daily
+          setTimeout(done, 500)
+        }
+      } else if (action === 'cancel') {
+        done() //关闭
+      }
     }
   },
   filters: {
@@ -353,5 +393,14 @@ export default {
 }
 .baidumap {
   display: none;
+}
+.daily-report {
+  box-sizing: border-box;
+  width: 90%;
+  height: 200px;
+  line-height: 40px;
+  margin: 30px 13px;
+  padding: 10px 14px;
+  border: 1px solid #bdbbbe;
 }
 </style>

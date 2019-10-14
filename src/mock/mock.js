@@ -117,9 +117,9 @@ export default {
     //写日报接口
     mock.onPost('/recodeDaily').reply(config => {
       if (config.data) {
-        let { Daily } = JSON.parse(config.data)
+        let { userId } = JSON.parse(config.data)
         return new Promise(resolve => {
-          if (Daily) {
+          if (userId) {
             resolve([
               200,
               {
