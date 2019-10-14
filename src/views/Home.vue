@@ -160,6 +160,8 @@ export default {
       this.$router.push('/login') // 未登录，跳登录页
     }
     this.user = JSON.parse(localStorage.getItem('User'))
+  },
+  mounted() {
     signIn({
       userName: this.user.userName,
       password: this.user.password
@@ -172,8 +174,8 @@ export default {
           if (this.attendanceLength == 2) {
             this.baidumap = true
           }
-          this.loading = false
         }
+        this.loading = false
       }
     })
   },

@@ -50,6 +50,8 @@ export default {
   },
   created() {
     this.user = JSON.parse(localStorage.getItem('User'))
+  },
+  mounted() {
     let userId = this.user.userId
     getAllDailyAndAttendance({ userId: userId }).then(
       res => {
@@ -59,7 +61,6 @@ export default {
       }
     )
   },
-  mounted() {},
   methods: {
     onClickLeft() {
       this.$router.go(-1)
