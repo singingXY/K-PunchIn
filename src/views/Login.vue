@@ -68,7 +68,6 @@ export default {
           password: this.user.password
         }
         signIn(para).then(res => {
-          console.log(res)
           let data = res.data
           let { message, code } = data
           if (code == 0) {

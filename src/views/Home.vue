@@ -239,8 +239,6 @@ export default {
           }).then(res => {
             if (res.code == 0) {
               this.$toast(res.data)
-            } else {
-              console.log(res.message)
             }
           })
           this.data.daily = this.daily
@@ -273,7 +271,8 @@ export default {
             this.baidumap = true
           }
         } else {
-          console.log(res.message)
+          //console.log(res.message)
+          this.$toast('打卡失败')
         }
       })
     }
