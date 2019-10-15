@@ -1,5 +1,7 @@
 // vue.config.js
 module.exports = {
+  // 基本路径
+  baseUrl: './',
   chainWebpack: config => {
     config.module
       .rule('css')
