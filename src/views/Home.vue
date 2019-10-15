@@ -114,13 +114,16 @@
           <div
             class="punch-btn"
             v-if="attendanceLength == 1"
+            @click="Attendance(1)"
           >
             下班打卡
           </div>
         </template>
         <template v-else>
           <p>您今天还没有打卡哦~</p>
-          <div class="punch-btn">上班打卡</div>
+          <div class="punch-btn" @click="Attendance('0')">
+            上班打卡
+          </div>
         </template>
       </div>
       <div class="mypunch " :class="{ baidumap: baidumap }">
@@ -143,7 +146,11 @@
 </template>
 
 <script>
-import { signIn, recodeDaily } from '@/api/api'
+import {
+  signIn,
+  recodeDaily,
+  recodeAttendance
+} from '@/api/api'
 import { Image, Cell, Dialog } from 'vant'
 // @ is an alias to /src
 
@@ -162,7 +169,8 @@ export default {
       baidumap: false,
       attendanceLength: 0,
       loading: true,
-      dailyReportShow: false
+      dailyReportShow: false,
+      nowTime: ''
     }
   },
   components: {
@@ -241,6 +249,33 @@ export default {
       } else if (action === 'cancel') {
         done() //关闭
       }
+    },
+    Attendance(type) {
+      recodeAttendance({
+        userId: this.user.userId,
+        type: type,
+        longitude: this.location.lng,
+        latitude: this.location.lat,
+        address: this.nowAddress
+      }).then(res => {
+        if (res.code == 0) {
+          this.$toast(res.data)
+          this.data[0].attendance.push({
+            type: type,
+            address: this.nowAddress,
+            date: this.$options.filters.formatDate(2),
+            latitude: this.location.lat,
+            longitude: this.location.lng,
+            userId: this.user.userId
+          })
+          this.attendanceLength = this.data[0].attendance.length
+          if (this.attendanceLength == 2) {
+            this.baidumap = true
+          }
+        } else {
+          console.log(res.message)
+        }
+      })
     }
   },
   filters: {
@@ -255,8 +290,24 @@ export default {
       h = h < 10 ? '0' + h : h
       let m = date.getMinutes()
       m = m < 10 ? '0' + m : m
+      let s = date.getSeconds()
+      s = s < 10 ? '0' + s : s
 
-      if (e) {
+      if (e == 2) {
+        return (
+          y +
+          '-' +
+          MM +
+          '-' +
+          d +
+          ' ' +
+          h +
+          ':' +
+          m +
+          ':' +
+          s
+        )
+      } else if (e) {
         return y + '年' + MM + '月' + d + '日' + h + ':' + m
       } else {
         return y + '年' + MM + '月' + d + '日'

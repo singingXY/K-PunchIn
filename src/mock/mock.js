@@ -89,9 +89,9 @@ export default {
     //考勤打卡接口
     mock.onPost('/recodeAttendance').reply(config => {
       if (config.data) {
-        let { punch } = JSON.parse(config.data)
+        let { userId, type } = JSON.parse(config.data)
         return new Promise(resolve => {
-          if (punch) {
+          if (userId && type) {
             resolve([
               200,
               {
