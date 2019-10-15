@@ -34,6 +34,10 @@ K-PunchI
 └─ vue.config.js                    // 自定义配置
 ```
 
+## 预览
+
+![image](https://raw.githubusercontent.com/singingXY/K-PunchIn/README-pic/1.png)
+
 ## Project setup
 
 ```bash
