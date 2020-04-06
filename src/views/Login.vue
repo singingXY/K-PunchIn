@@ -1,40 +1,28 @@
 <template>
   <div class="warp">
-    <img
-      class="logo"
-      src="@/assets/images/progress_icon_7.png"
-      alt="s"
-    />
+    <img class="logo"
+         src="@/assets/images/progress_icon_7.png"
+         alt="s" />
     <p class="login-title">移动考勤</p>
 
     <div class="login">
-      <van-field
-        v-model="user.userName"
-        clearable
-        placeholder="手机号或邮箱"
-        left-icon="https://raw.githubusercontent.com/singingXY/K-PunchIn/master/src/assets/images/user.png"
-      />
-      <van-field
-        v-model="user.password"
-        type="password"
-        placeholder="登录密码"
-        left-icon="https://raw.githubusercontent.com/singingXY/K-PunchIn/master/src/assets/images/lock.png"
-      />
+      <van-field v-model="user.userName"
+                 clearable
+                 placeholder="手机号或邮箱"
+                 left-icon="https://raw.githubusercontent.com/singingXY/K-PunchIn/master/src/assets/images/user.png" />
+      <van-field v-model="user.password"
+                 type="password"
+                 placeholder="登录密码"
+                 left-icon="https://raw.githubusercontent.com/singingXY/K-PunchIn/master/src/assets/images/lock.png" />
       <div class="autoLogin">
-        <van-checkbox
-          v-model="autoLogin"
-          checked-color="#0f84c7"
-          >自动登录</van-checkbox
-        >
+        <van-checkbox v-model="autoLogin"
+                      checked-color="#0f84c7">自动登录</van-checkbox>
       </div>
       <div class="login-btn">
-        <van-button
-          type="primary"
-          size="large"
-          @click.native.prevent="handleSubmit"
-          color="#0f84c7"
-          >登 录</van-button
-        >
+        <van-button type="primary"
+                    size="large"
+                    @click.native.prevent="handleSubmit"
+                    color="#0f84c7">登 录</van-button>
       </div>
     </div>
     <div class="container"></div>
@@ -42,10 +30,10 @@
 </template>
 
 <script>
-import { Field, Button, Checkbox } from 'vant'
-import { signIn } from '@/api/api'
+import { Field, Button, Checkbox } from "vant";
+import { signIn } from "@/api/api";
 export default {
-  name: 'Login',
+  name: "Login",
   components: {
     [Field.name]: Field,
     [Button.name]: Button,
@@ -54,11 +42,11 @@ export default {
   data() {
     return {
       user: {
-        userName: '123',
-        password: ''
+        userName: "123",
+        password: ""
       },
       autoLogin: true
-    }
+    };
   },
   methods: {
     handleSubmit() {
@@ -66,34 +54,30 @@ export default {
         let para = {
           userName: this.user.userName,
           password: this.user.password
-        }
+        };
         signIn(para).then(res => {
-          let data = res.data
-          let { message, code } = data
-          if (code == 0) {
-            this.user = data.data.user
-            this.$toast('登录成功')
+          let data = res.data;
+          let { message, code } = data;
+          if (code == 0 && data.data[0].user) {
+            this.user = data.data[0].user;
+            this.$toast("登录成功");
             if (this.autoLogin) {
               // 储存登录状态
-              localStorage.setItem('Login', true)
-              localStorage.setItem(
-                'User',
-                JSON.stringify(this.user)
-              )
+              localStorage.setItem("Login", true);
+              localStorage.setItem("User", JSON.stringify(this.user));
             }
-            //
-            this.$router.push('/')
+            this.$router.push("/");
           } else {
-            this.$toast.fail(message)
+            this.$toast.fail(message);
           }
-        })
+        });
       } else {
-        this.$toast.fail('请完整填写用户名与密码')
-        return false
+        this.$toast.fail("请完整填写用户名与密码");
+        return false;
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

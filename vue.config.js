@@ -1,8 +1,8 @@
 // vue.config.js
 module.exports = {
   // 基本路径
-  baseUrl: './',
-  chainWebpack: config => {
+  publicPath: './',
+  chainWebpack: (config) => {
     config.module
       .rule('css')
       .test(/\.css$/)
@@ -11,7 +11,7 @@ module.exports = {
       .use('px2rem')
       .loader('px2rem-loader')
       .options({
-        remUnit: 64
+        remUnit: 64,
       })
-  }
+  },
 }
